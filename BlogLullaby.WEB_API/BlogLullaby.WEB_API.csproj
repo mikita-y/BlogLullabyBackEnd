@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogLullaby.BLL\BlogLullaby.BLL.csproj" />
+    <ProjectReference Include="..\BlogLullaby.DAL.AspNetCoreIdentityManager\BlogLullaby.DAL.AspNetCoreIdentityManager.csproj" />
+    <ProjectReference Include="..\BlogLullaby.DAL.SqlServerDataStore\BlogLullaby.DAL.SqlServerDataStore.csproj" />
+    <ProjectReference Include="..\BlogLullaby.DAL\BlogLullaby.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\postsPhotos\" />
+  </ItemGroup>
+
+</Project>
