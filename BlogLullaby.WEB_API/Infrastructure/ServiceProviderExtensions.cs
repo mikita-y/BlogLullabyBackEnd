@@ -3,6 +3,7 @@ using BlogLullaby.BLL.EmailService;
 using BlogLullaby.BLL.PostPreviewListService;
 using BlogLullaby.BLL.PostService;
 using BlogLullaby.BLL.UserCommunicatingService;
+using BlogLullaby.BLL.UserListService;
 using BlogLullaby.BLL.UserProfileService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +19,8 @@ namespace BlogLullaby.WEB_API.Infrastructure
         {
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IPostPreviewListService, PostPreviewListService>();
-            services.AddTransient<IUserProfileService, UserProfileService>(); 
+            services.AddTransient<IUserProfileService, UserProfileService>();
+            services.AddTransient<IUserListService, UserListService>();
             services.AddTransient<IUserCommunicatingService, UserCommunicatingService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IAuthenticationService, AuthenticationService >();
