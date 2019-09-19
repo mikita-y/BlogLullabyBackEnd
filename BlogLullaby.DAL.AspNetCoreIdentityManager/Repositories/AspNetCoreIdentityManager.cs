@@ -1,7 +1,7 @@
 ﻿using BlogLullaby.DAL.IdentityManager.Entities;
 using BlogLullaby.DAL.IdentityManager.Infrastucture;
 using BlogLullaby.DAL.IdentityManager.Interfaces;
-using logLullaby.DAL.AspNetCoreIdentityManager.Infrastucture;
+using BlogLullaby.DAL.AspNetCoreIdentityManager.Infrastucture;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;

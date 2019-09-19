@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlogLullaby.WEB_API.Migrations
+namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
     [Migration("20190918235259_UserProfile-IdentityIdIsRequired")]

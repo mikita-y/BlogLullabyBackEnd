@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlogLullaby.WEB_API.Migrations
+namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
     public partial class UserProfileIdentityIdIsRequired : Migration
     {

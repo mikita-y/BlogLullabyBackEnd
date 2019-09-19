@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20190918234854_UpdateUserProfile")]
-    partial class UpdateUserProfile
+    [Migration("20190919000755_CheckWork")]
+    partial class CheckWork
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 53, 119, DateTimeKind.Local).AddTicks(3649));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 527, DateTimeKind.Local).AddTicks(1710));
 
                     b.Property<string>("DialogId");
 
@@ -81,7 +81,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 53, 82, DateTimeKind.Local).AddTicks(8011));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 510, DateTimeKind.Local).AddTicks(2182));
 
                     b.Property<string>("MainImageUrl");
 
@@ -139,6 +139,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("IdentityUserId")
+                        .IsRequired()
                         .HasMaxLength(450);
 
                     b.Property<string>("LastName")
@@ -146,12 +147,12 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("LastVisit")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 52, 921, DateTimeKind.Local).AddTicks(349));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 401, DateTimeKind.Local).AddTicks(6947));
 
                     b.Property<string>("PhotoUrl");
 
                     b.Property<string>("Specialization")
-                        .HasMaxLength(50);
+                        .HasMaxLength(60);
 
                     b.Property<string>("Username")
                         .IsRequired()

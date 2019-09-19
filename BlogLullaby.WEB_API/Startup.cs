@@ -2,21 +2,17 @@
 using BlogLullaby.WEB_API.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using BlogLullaby.DAL.SqlServerDataStore.Context;
 using BlogLullaby.DAL.DataStore.Interfaces;
 using BlogLullaby.DAL.IdentityManager.Interfaces;
 using BlogLullaby.DAL.DataStore.Repositories;
 using Microsoft.AspNetCore.Identity;
-using logLullaby.DAL.AspNetCoreIdentityManager.Context;
+using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Repositories;
 
 namespace BlogLullaby.WEB_API

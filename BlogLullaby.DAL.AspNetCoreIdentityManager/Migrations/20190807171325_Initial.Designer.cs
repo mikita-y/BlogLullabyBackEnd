@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using logLullaby.DAL.AspNetCoreIdentityManager.Context;
+using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
 
 namespace BlogLullaby.DAL.Migrations
 {

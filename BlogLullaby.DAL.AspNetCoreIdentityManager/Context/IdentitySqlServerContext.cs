@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace logLullaby.DAL.AspNetCoreIdentityManager.Context
+namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Context
 {
     public class IdentitySqlServerContext : IdentityDbContext<IdentityUser>
     {

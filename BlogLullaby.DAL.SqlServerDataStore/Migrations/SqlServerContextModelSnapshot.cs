@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlogLullaby.WEB_API.Migrations
+namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
     partial class SqlServerContextModelSnapshot : ModelSnapshot
@@ -56,7 +56,7 @@ namespace BlogLullaby.WEB_API.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 52, 57, 354, DateTimeKind.Local).AddTicks(4844));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 527, DateTimeKind.Local).AddTicks(1710));
 
                     b.Property<string>("DialogId");
 
@@ -79,7 +79,7 @@ namespace BlogLullaby.WEB_API.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 52, 57, 340, DateTimeKind.Local).AddTicks(6735));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 510, DateTimeKind.Local).AddTicks(2182));
 
                     b.Property<string>("MainImageUrl");
 
@@ -145,12 +145,12 @@ namespace BlogLullaby.WEB_API.Migrations
 
                     b.Property<DateTime>("LastVisit")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 52, 57, 175, DateTimeKind.Local).AddTicks(2857));
+                        .HasDefaultValue(new DateTime(2019, 9, 19, 3, 7, 53, 401, DateTimeKind.Local).AddTicks(6947));
 
                     b.Property<string>("PhotoUrl");
 
                     b.Property<string>("Specialization")
-                        .HasMaxLength(50);
+                        .HasMaxLength(60);
 
                     b.Property<string>("Username")
                         .IsRequired()

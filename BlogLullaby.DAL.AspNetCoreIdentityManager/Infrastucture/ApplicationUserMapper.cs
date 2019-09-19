@@ -2,7 +2,7 @@
 using BlogLullaby.DAL.IdentityManager.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace logLullaby.DAL.AspNetCoreIdentityManager.Infrastucture
+namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Infrastucture
 {
     internal static class ApplicationUserMapper
     {

@@ -14,7 +14,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Configurations
             builder.Property(x => x.Username).IsRequired();
             builder.Property(x => x.FirstName).HasMaxLength(30);
             builder.Property(x => x.LastName).HasMaxLength(30);
-            builder.Property(x => x.Specialization).HasMaxLength(50);
+            builder.Property(x => x.Specialization).HasMaxLength(60);
             builder.Property(x => x.City).HasMaxLength(30);
             builder.Property(x => x.IdentityUserId).HasMaxLength(450);
             builder.Property(x => x.IdentityUserId).IsRequired();
