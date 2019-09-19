@@ -19,14 +19,14 @@ namespace BlogLullaby.WEB_API.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            return Ok(await _userListService.GetPostsAsync(null));
+            return Ok(await _userListService.GetUsersAsync(null));
         }
 
         // POST: api/UserList
         [HttpPost]
         public async Task<ActionResult> Post(UserListCriterion criterion)
         {
-            return Ok(await _userListService.GetPostsAsync(criterion));
+            return Ok(await _userListService.GetUsersAsync(criterion));
         }
     }
 }

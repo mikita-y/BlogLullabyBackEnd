@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BlogLullaby.BLL.Infrastructure;
+using BlogLullaby.BLL.UserListService.DTO;
 using BlogLullaby.DAL.DataStore.Interfaces;
 
 namespace BlogLullaby.BLL.UserListService
@@ -15,21 +14,16 @@ namespace BlogLullaby.BLL.UserListService
         {
             _dataStore = dataStore;
         }
-        public async Task<IEnumerable<UserViewDTO>> GetPostsAsync(UserListCriterion criterion)
+        public async Task<IEnumerable<UserProfilePreviewDTO>> GetUsersAsync(UserListCriterion criterion)
         {
             if (criterion == null)
                 criterion = new UserListCriterion();
-            if(criterion.Username != null)
-                return await Task.Run(() =>
-                    _dataStore.UserProfiles.GetAll()
-                    .Where(x => x.Username.Contains(criterion.Username))
-                    .Paging(criterion.PageNumber, criterion.PageSize)
-                    .Select(x => new UserViewDTO(x)));
-            else
-                return await Task.Run(() =>
-                    _dataStore.UserProfiles.GetAll()
-                    .Paging(criterion.PageNumber, criterion.PageSize)
-                    .Select(x => new UserViewDTO(x)));
+            return await Task.Run(() => 
+                _dataStore.UserProfiles.GetAll()
+                .Filtering(criterion)
+                .Sorting(criterion)
+                .Paging(criterion.PageNumber, criterion.PageSize)
+                .Select(x => x.MapToDTO()));
         }
     }
 }

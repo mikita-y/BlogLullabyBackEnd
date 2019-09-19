@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BlogLullaby.BLL.UserListService
+﻿namespace BlogLullaby.BLL.UserListService
 {
+    public enum FilterBy { Username, FullName, City, Online };
+
     public class UserListCriterion
     {
-        public string Username { get; set; }
+        public FilterBy? FilterBy { get; set; }
+        public string SearchText { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
 
