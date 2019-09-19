@@ -38,7 +38,7 @@ namespace BlogLullaby.WEB_API
             services.Configure<AppConfig>(Configuration.GetSection("AppConfig"));
             
             services.AddDbContext<SqlServerContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"), b => b.MigrationsAssembly("BlogLullaby.DAL.SqlServerDataStore")));
             services.AddDbContext<IdentitySqlServerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentitySqlServerConnection")));
  

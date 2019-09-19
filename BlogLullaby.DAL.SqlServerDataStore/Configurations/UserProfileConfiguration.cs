@@ -11,11 +11,13 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Configurations
         {
             builder.HasIndex(x => x.Username).IsUnique();
             builder.Property(x => x.Username).HasMaxLength(30);
+            builder.Property(x => x.Username).IsRequired();
             builder.Property(x => x.FirstName).HasMaxLength(30);
             builder.Property(x => x.LastName).HasMaxLength(30);
             builder.Property(x => x.Specialization).HasMaxLength(50);
             builder.Property(x => x.City).HasMaxLength(30);
             builder.Property(x => x.IdentityUserId).HasMaxLength(450);
+            builder.Property(x => x.IdentityUserId).IsRequired();
             builder.Property(x => x.LastVisit).HasDefaultValue(DateTime.Now);
         }
     }
