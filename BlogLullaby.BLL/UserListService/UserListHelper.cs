@@ -13,21 +13,17 @@ namespace BlogLullaby.BLL.UserListService
 
         public static IQueryable<UserProfile> Filtering(this IQueryable<UserProfile> posts, UserListCriterion criterion)
         {
-            if (criterion.FilterBy == null)
+            if (criterion == null)
                 return posts;
-            switch (criterion.FilterBy)
-            {
-                case FilterBy.City:
-                    return posts.Where(x => x.City.Contains(criterion.SearchText));
-                case FilterBy.Online:
-                    return posts.Where(x => (x.LastVisit - DateTime.Now).Duration().Minutes < 5);
-                case FilterBy.Username:
-                    return posts.Where(x => x.Username.Contains(criterion.SearchText));
-                case FilterBy.FullName:
-                    return posts.Where(x => $"{x.FirstName} {x.LastName}".Contains(criterion.SearchText));
-                default:
-                    return posts;
-            }
+            if(!String.IsNullOrEmpty(criterion.Username))
+                posts = posts.Where(x => x.Username.Contains(criterion.Username));
+            if (!String.IsNullOrEmpty(criterion.Fullname))
+                posts = posts.Where(x => $"{x.FirstName} {x.LastName}".Contains(criterion.Fullname));
+            if (!String.IsNullOrEmpty(criterion.City))
+                posts = posts.Where(x => x.City.Contains(criterion.City));
+            if(criterion.Online)
+                posts = posts.Where(x => (x.LastVisit - DateTime.Now).Duration().Minutes < 5);
+            return posts;
         }
     }
 }
