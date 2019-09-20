@@ -1,4 +1,5 @@
 ﻿using BlogLullaby.DAL.DataStore.Entities;
+using BlogLullaby.DAL.SqlServerDataStore.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogLullaby.DAL.SqlServerDataStore.Context
@@ -19,31 +20,12 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DialogMember>()
-                .Property(x => x.FirstKey).HasColumnName("DialogId");
-            modelBuilder.Entity<DialogMember>()
-                .Property(x => x.SecondKey).HasColumnName("UserProfileId");
-            modelBuilder.Entity<DialogMember>()
-                .HasKey(x => new { x.FirstKey, x.SecondKey });
-            modelBuilder.Entity<DialogMember>()
-                .HasOne(x => x.Dialog)
-                .WithMany(x => x.DialogMembers)
-                .HasForeignKey(x => x.FirstKey);
-            modelBuilder.Entity<DialogMember>()
-                .HasOne(x => x.UserProfile)
-                .WithMany(x => x.DialogMembers)
-                .HasForeignKey(x => x.SecondKey);
-
-            modelBuilder.Entity<UserProfile>()
-                .HasIndex(x => x.Username)
-                .IsUnique();
-
-            
+            modelBuilder.ApplyConfiguration(new UserProfileConfiguration());
+            modelBuilder.ApplyConfiguration(new DialogMemberConfiguration());
+            modelBuilder.ApplyConfiguration(new DialogConfiguration());
+            modelBuilder.ApplyConfiguration(new PostConfiguration());
+            modelBuilder.ApplyConfiguration(new PostBodyBlockConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageConfiguration());
         }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-                //optionsBuilder.UseSqlServer(connectionString/* , b => b.MigrationsAssembly("BlogLullaby.DAL")*/);
-        }  
     }
 }
