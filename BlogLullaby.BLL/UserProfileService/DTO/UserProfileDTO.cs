@@ -23,5 +23,6 @@ namespace BlogLullaby.BLL.UserProfileService.DTO
         public string Description { get; set; }
         public string City { get; set; }
         public DateTime LastVisit { get; set; }
+        public int TotalVisits { get; set; }
     }
 }

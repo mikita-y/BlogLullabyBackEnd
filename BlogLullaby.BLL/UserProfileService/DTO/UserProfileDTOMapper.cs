@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlogLullaby.DAL.DataStore.Entities;
+using System.Linq;
 
 namespace BlogLullaby.BLL.UserProfileService.DTO
 {
@@ -11,7 +12,8 @@ namespace BlogLullaby.BLL.UserProfileService.DTO
             if (entity == null)
                 return null;
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<UserProfile, UserProfileDTO>();
+                cfg.CreateMap<UserProfile, UserProfileDTO>()
+                .ForMember("TotalVisits", opt => opt.MapFrom(x => x.Posts.Sum(y => y.Visits)));
             });
             var mapper = config.CreateMapper();
             return mapper.Map<UserProfile, UserProfileDTO>(entity);
