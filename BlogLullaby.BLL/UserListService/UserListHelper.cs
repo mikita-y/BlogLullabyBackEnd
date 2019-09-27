@@ -22,7 +22,9 @@ namespace BlogLullaby.BLL.UserListService
             if (!String.IsNullOrEmpty(criterion.City))
                 posts = posts.Where(x => x.City.Contains(criterion.City));
             if(criterion.Online)
-                posts = posts.Where(x => (x.LastVisit - DateTime.Now).Duration().Minutes < 5);
+                posts = posts.Where(x => (x.LastVisit - DateTime.Now).Duration().Minutes < 5
+                    && (x.LastVisit - DateTime.Now).Duration().Hours == 0
+                    && (x.LastVisit - DateTime.Now).Duration().Days == 0);
             return posts;
         }
     }

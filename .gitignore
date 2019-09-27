@@ -5,6 +5,9 @@
 
 # private application data
 appsettings.json
+# testing result
+userPhotos/
+postsPhotos/
 
 # User-specific files
 *.suo
