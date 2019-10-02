@@ -19,6 +19,9 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Configurations
             builder.Property(x => x.IdentityUserId).HasMaxLength(450);
             builder.Property(x => x.IdentityUserId).IsRequired();
             builder.Property(x => x.LastVisit).HasDefaultValue(DateTime.Now);
+            /*
+            builder.HasData(
+            new UserProfile { Id=0, Username="System", IdentityUserId=""});*/
         }
     }
 }

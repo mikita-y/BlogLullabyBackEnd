@@ -12,6 +12,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Context
         public DbSet<Message> Messages { get; set; }
         public DbSet<DialogMember> DialogMembers { get; set; }
         public DbSet<PostBodyBlock> PostBodyBlocks { get; set; }
+        public DbSet<NotReadMessage> NotReadMessages { get; set; }
 
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
             : base(options)
@@ -26,6 +27,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Context
             modelBuilder.ApplyConfiguration(new PostConfiguration());
             modelBuilder.ApplyConfiguration(new PostBodyBlockConfiguration());
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
+            modelBuilder.ApplyConfiguration(new NotReadMessageConfiguration());
         }
     }
 }

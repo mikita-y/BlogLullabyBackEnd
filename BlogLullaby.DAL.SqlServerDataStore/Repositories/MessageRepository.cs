@@ -14,7 +14,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
         {
             return 
                 context.Set<Message>()
-                .Include(x => x.UserProfile);
+                .Include(x => x.Sender);
         }
     }
 }

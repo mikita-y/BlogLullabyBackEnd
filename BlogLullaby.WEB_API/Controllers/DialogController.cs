@@ -14,53 +14,32 @@ namespace BlogLullaby.WEB_API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CommunicatingController : ControllerBase
+    public class DialogController : ControllerBase
     {
         private IUserCommunicatingService _communicatingService;
 
-        public CommunicatingController(IUserCommunicatingService service)
+        public DialogController(IUserCommunicatingService service)
         {
             _communicatingService = service;
         }
         // GET: api/Communicating
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<(IEnumerable<DialogPreview> dialogList, int pageCount)>> Get()
         {
-            var criterion = new DialogCriterion() { PageNumber = 0, PageSize = 10 };
-            var username = HttpContext.User.Claims.Where(x => x.Type == "username").SingleOrDefault().Value;
-            if (username == null)
+            var criterion = new DialogCriterion()
+            {
+                PageNumber = 0,
+                PageSize = 10,
+                Username = await HttpContext.GetUserNameAsync()
+            };
+            if (criterion.Username == null)
                 return BadRequest(new string[] { "Error with claim!!!" });
-            var dialogList = await _communicatingService.GetDialogListByUserNameAsync(username, criterion);
-            return Ok(dialogList);
-        }
-
-        // GET: api/Communicating/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<IActionResult> Get(string id)
-        {
-            var dialog = await _communicatingService.GetDialogByIdAsync(id);
-            if(dialog == null)
-                return NotFound(new string[] { "Dialog not found." });
-            return Ok(dialog);
-
-        }
-
-        // POST: api/Communicating
-        [HttpPost]
-        [Route("sendmessage")]
-        public async Task<IActionResult> SendMessage(CreatingMessageModel message)
-        {
-            var username = await HttpContext.GetUserNameAsync();
-            if (username == null)
-                return BadRequest(new string[] { "Error with claim!!!" });
-            var messageDto = message.MapToDTO(username);
-            var result = await _communicatingService.AddMessageToDialogAsync(messageDto);
-            if (!result.IsSuccess)
-                return BadRequest(result.Descriptions);
-            return Ok();
+            var list = await _communicatingService.GetDialogListAsync(criterion);
+            return Ok(list);
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> Post(DialogCreatingDTO dialog)
         {
             var username = await HttpContext.GetUserNameAsync();
@@ -75,8 +54,29 @@ namespace BlogLullaby.WEB_API.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public async Task<ActionResult<(IEnumerable<DialogPreview> dialogList, int pageCount)>> Post(DialogCriterion criterion)
+        {
+            var username = await HttpContext.GetUserNameAsync();
+            if (username == null)
+                return BadRequest(new string[] { "Error with claim!!!" });
+            criterion.Username = username;
+            var list = await _communicatingService.GetDialogListAsync(criterion);
+            return Ok(list);
+        }
 
-        // PUT: api/Communicating/5
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var dialog = await _communicatingService.GetDialogByIdAsync(id);
+            if(dialog == null)
+                return NotFound(new string[] { "Dialog not found." });
+            return Ok(dialog);
+
+        }
+
+
+
         [HttpPut]
         public async Task<IActionResult> Put(DialogUpdatingModel dialog)
         {
@@ -88,8 +88,9 @@ namespace BlogLullaby.WEB_API.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+        public async Task<IActionResult> Delete(string id)
+        {            
+            return Ok();
         }
     }
 }

@@ -2,13 +2,12 @@
 using BlogLullaby.DAL.DataStore.Interfaces;
 using BlogLullaby.DAL.DataStore.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
 namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
 {
-    /*
+    
     public class EFRelationRepository<Entity, Key1, Key2> : IRelationRepository<Entity, Key1, Key2> where Entity : EntityWithCompositeKey<Key1, Key2>, new()
     {
         private readonly DbContext context;
@@ -16,6 +15,21 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
         public EFRelationRepository(DbContext context)
         {
             this.context = context;
+        }
+
+        public IQueryable<Entity> GetAll()
+        {
+            return context.Set<Entity>();
+        }
+
+        public Entity Find(Key1 key1, Key2 key2)
+        {
+            return context.Set<Entity>().Find(key1, key2);
+        }
+
+        public async Task<Entity> FindAsync(Key1 key1, Key2 key2)
+        {
+            return await context.Set<Entity>().FindAsync(key1, key2);
         }
 
         public async Task<DataStoreOperationDetails> DeleteByCompositeKeyAsync(Key1 key1, Key2 key2)
@@ -61,5 +75,5 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
             }
             return createdEntity.Entity;
         }
-    }*/
+    }
 }

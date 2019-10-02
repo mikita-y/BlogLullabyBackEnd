@@ -8,7 +8,7 @@ namespace BlogLullaby.DAL.DataStore.Entities
         public string Body { get; set; }
         public DateTime Date { get; set; }
 
-        public UserProfile UserProfile { get; set; }
+        public UserProfile Sender { get; set; }
 
         public Dialog Dialog { get; set; }
     }
