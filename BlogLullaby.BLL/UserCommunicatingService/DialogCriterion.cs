@@ -8,5 +8,6 @@ namespace BlogLullaby.BLL.UserCommunicatingService
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
+        public string Username { get; set; } 
     }
 }

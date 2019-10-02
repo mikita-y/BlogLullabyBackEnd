@@ -11,6 +11,6 @@ namespace BlogLullaby.DAL.DataStore.Interfaces
         IRepository<Post, int> Posts { get; }
         IRepository<Dialog, string> Dialogs { get; }
         IRepository<UserProfile, int> UserProfiles { get; }
-        //IRelationRepository<DialogMember, string, int> DialogMembers { get; }
+        IRelationRepository<NotReadMessage, string, int> NotReadMessages { get; }
     }
 }

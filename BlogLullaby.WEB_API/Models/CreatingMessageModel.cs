@@ -22,7 +22,7 @@ namespace BlogLullaby.WEB_API.Models
                 Body = this.Body,
                 Date = DateTime.Now,
                 DialogId = this.DialogId,
-                Owner = new UserViewDTO
+                Sender = new UserViewDTO
                 {
                     Username = username
                 }

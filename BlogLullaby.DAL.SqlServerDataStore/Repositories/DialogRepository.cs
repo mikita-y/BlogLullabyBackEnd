@@ -17,7 +17,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
             return 
                 context.Set<Dialog>()
                 .Include(x => x.Messages)
-                .ThenInclude(x => x.UserProfile)
+                .ThenInclude(x => x.Sender)
                 .Include(x => x.DialogMembers)
                 .ThenInclude(x => x.UserProfile);
         }

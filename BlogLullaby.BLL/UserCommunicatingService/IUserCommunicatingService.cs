@@ -8,9 +8,10 @@ namespace BlogLullaby.BLL.UserCommunicatingService
     public interface IUserCommunicatingService
     {
         Task<OperationDetails> CreateDialogAsync(DialogCreatingDTO newDialog);
-        Task<DialogDTO> GetDialogByIdAsync(string id);
+        Task<DialogDTO> GetDialogByIdAsync(string dialogId);
         Task<OperationDetails> AddMemberToDialogAsync(string dialogId, string username);
         Task<OperationDetails> AddMessageToDialogAsync(MessageDTO messageDTO);
-        Task<IEnumerable<DialogView>> GetDialogListByUserNameAsync(string username, DialogCriterion criterion);
+        Task<(IEnumerable<DialogPreview> dialogList, int pageCount)> GetDialogListAsync(DialogCriterion criterion);
+        Task ReadMessageAsync(string messageId, string username);
     }
 }

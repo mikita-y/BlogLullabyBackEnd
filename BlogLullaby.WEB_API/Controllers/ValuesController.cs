@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogLullaby.BLL.UserCommunicatingService;
+using BlogLullaby.WEB_API.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogLullaby.WEB_API.Controllers
@@ -10,20 +12,18 @@ namespace BlogLullaby.WEB_API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private IUserCommunicatingService _communicatingService;
+
+        public ValuesController(IUserCommunicatingService service)
+        {
+            _communicatingService = service;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            if (id == 0)
-                return BadRequest();
-            return "value";
         }
 
         // POST api/values

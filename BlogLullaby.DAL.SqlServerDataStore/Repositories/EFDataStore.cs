@@ -11,6 +11,7 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
         private IRepository<Post, int> postRepository;
         private IRepository<Message, string> messageRepository;
         private IRepository<Dialog, string> dialogRepository;
+        private IRelationRepository<NotReadMessage, string, int> notReadMessageRepository;
 
         public EFDataStore(T context)
         {
@@ -54,6 +55,16 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Repositories
                 if (userProfileRepository == null)
                     userProfileRepository = new UserProfileRepository(_context);
                 return userProfileRepository;
+            }
+        }
+
+        public IRelationRepository<NotReadMessage, string, int> NotReadMessages
+        {
+            get
+            {
+                if (notReadMessageRepository == null)
+                    notReadMessageRepository = new EFRelationRepository<NotReadMessage, string, int>(_context);
+                return notReadMessageRepository;
             }
         }
 

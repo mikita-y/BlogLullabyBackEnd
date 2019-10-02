@@ -12,10 +12,10 @@ namespace BlogLullaby.BLL.UserProfileService.DTO
         public string Username { get; set; }
         [Required]
         [StringLength(30, MinimumLength = 2)]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
         [Required]
         [StringLength(30, MinimumLength = 2)]
-        public string LastName { get; set; }
+        public string Lastname { get; set; }
         public string PhotoUrl { get; set; }
         public string AvatarUrl { get; set; }
         [StringLength(50)]
@@ -23,5 +23,6 @@ namespace BlogLullaby.BLL.UserProfileService.DTO
         public string Description { get; set; }
         public string City { get; set; }
         public DateTime LastVisit { get; set; }
+        public int TotalVisits { get; set; }
     }
 }
