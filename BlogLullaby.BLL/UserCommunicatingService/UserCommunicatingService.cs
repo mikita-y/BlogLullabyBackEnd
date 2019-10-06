@@ -12,6 +12,7 @@ namespace BlogLullaby.BLL.UserCommunicatingService
     public class UserCommunicatingService: IUserCommunicatingService
     {
         private IDataStore _dataStore;
+        private int messagesCount = 20;
         public UserCommunicatingService(IDataStore dataStore)
         {
             _dataStore = dataStore;
@@ -89,8 +90,22 @@ namespace BlogLullaby.BLL.UserCommunicatingService
         {
             var notReadMessages = _dataStore.NotReadMessages.GetAll();
             var dialogEntity = await _dataStore.Dialogs.GetByIdAsync(dialogId);
+            dialogEntity.Messages = dialogEntity.Messages.OrderByDescending(x => x.Date)
+                .Paging(0,messagesCount);
             var dialogDto = dialogEntity.MapToDTO(notReadMessages);
             return dialogDto;
+        }
+
+        public async Task<IEnumerable<MessageDTO>> LoadPreviousMessagesAsync(string dialogId, int loadedMessagesCount)
+        {
+            var messages = _dataStore.Messages.GetAll()
+                .Where(x => x.Dialog.Id == dialogId)
+                .OrderByDescending(x => x.Date)
+                .Skip(loadedMessagesCount)
+                .Take(messagesCount)
+                .Select(x => x.MapToDTO())
+                .OrderBy(x => x.Date);
+            return messages;
         }
 
         public async Task<(IEnumerable<DialogPreview> dialogList, int pageCount)> GetDialogListAsync(DialogCriterion criterion)

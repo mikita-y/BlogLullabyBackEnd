@@ -1,10 +1,7 @@
 ﻿using BlogLullaby.BLL.Infrastructure;
 using BlogLullaby.BLL.UserCommunicatingService.DTO;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlogLullaby.WEB_API.Models
 {
@@ -19,6 +16,7 @@ namespace BlogLullaby.WEB_API.Models
         {
             var dto = new MessageDTO
             {
+                Id = Guid.NewGuid().ToString(),
                 Body = this.Body,
                 Date = DateTime.Now,
                 DialogId = this.DialogId,
