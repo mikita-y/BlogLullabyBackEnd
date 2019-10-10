@@ -16,17 +16,11 @@ namespace BlogLullaby.WEB_API.Hubs
             _communicatingService = service;
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            await Clients.All.SendAsync("Connecting", $"{Context.ConnectionId} вошел в чат");
-            await base.OnConnectedAsync();
-        }
-
         public async Task ConnectToDialogue(string dialogId)
         {
-            /*var username = await Context.GetHttpContext().GetUserNameAsync();
+            var username = await Context.GetHttpContext().GetUserNameAsync();
             if (username == null)
-                return;*/
+                return;
             await Groups.AddToGroupAsync(Context.ConnectionId, dialogId);
             var dialog = await _communicatingService.GetDialogByIdAsync(dialogId);
             await Clients.Caller.SendAsync("GetDialog", dialog);
@@ -50,12 +44,12 @@ namespace BlogLullaby.WEB_API.Hubs
             // добавить логику по определению совпадения Id или обраки ошибки
         }
 
-        public async Task ReadMessage(string messageId)
+        public async Task ReadMessage(string messageId, string dialogId)
         {
             var username = await Context.GetHttpContext().GetUserNameAsync();
             if (username == null)
                 return;
-            //await Clients.Group(_dialogId).SendAsync("ReadMessage", messageId);
+            await Clients.Group(dialogId).SendAsync("ReadMessage", messageId);
 
             await _communicatingService.ReadMessageAsync(messageId, username);
         }
