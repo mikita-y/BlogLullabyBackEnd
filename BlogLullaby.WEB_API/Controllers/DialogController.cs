@@ -87,10 +87,10 @@ namespace BlogLullaby.WEB_API.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {            
             return Ok();
-        }
+        }*/
     }
 }

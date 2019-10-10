@@ -7,6 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
+using BlogLullaby.WEB_API.Hubs;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using System;
 
 namespace BlogLullaby.WEB_API
 {
@@ -32,8 +37,8 @@ namespace BlogLullaby.WEB_API
                 .AddDefaultTokenProviders();
             services.AddCors();
             services.AddJWTAuthentication(Configuration);
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,15 +53,22 @@ namespace BlogLullaby.WEB_API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseCors(builder =>
-            builder.AllowAnyOrigin()//WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host2"])
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host2"])
+                    .AllowCredentials());
+            
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<DialogHub>("/api/chat");
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

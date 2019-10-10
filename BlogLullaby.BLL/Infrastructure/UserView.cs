@@ -14,6 +14,7 @@ namespace BlogLullaby.BLL.Infrastructure
 
         public UserViewDTO()
         { }
+
         public UserViewDTO(UserProfile userProfile)
         {
             if(userProfile != null)

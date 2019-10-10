@@ -17,6 +17,7 @@ using BlogLullaby.DAL.DataStore.Interfaces;
 using BlogLullaby.DAL.DataStore.Repositories;
 using BlogLullaby.DAL.IdentityManager.Interfaces;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Repositories;
+using System.Threading.Tasks;
 
 namespace BlogLullaby.WEB_API.Infrastructure
 {
@@ -83,6 +84,23 @@ namespace BlogLullaby.WEB_API.Infrastructure
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appConfig["JWTConfig:SecurityKey"])),
                             // валидация ключа безопасности
                             ValidateIssuerSigningKey = true,
+                        };
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnMessageReceived = context =>
+                            {
+                                var accessToken = context.Request.Query["access_token"];
+
+                                // если запрос направлен хабу
+                                var path = context.HttpContext.Request.Path;
+                                if (!string.IsNullOrEmpty(accessToken) &&
+                                    (path.StartsWithSegments("/api/chat")))
+                                {
+                                    // получаем токен из строки запроса
+                                    context.Token = accessToken;
+                                }
+                                return Task.CompletedTask;
+                            }
                         };
                     });
         }
