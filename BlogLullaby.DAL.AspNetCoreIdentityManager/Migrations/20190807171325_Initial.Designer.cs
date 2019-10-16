@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
 
-namespace BlogLullaby.DAL.Migrations
+namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Migrations
 {
     [DbContext(typeof(IdentitySqlServerContext))]
     [Migration("20190807171325_Initial")]

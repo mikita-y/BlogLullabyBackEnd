@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using BlogLullaby.BLL.Infrastructure;
 using BlogLullaby.BLL.PostPreviewListService.DTO;
 using BlogLullaby.DAL.DataStore.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlogLullaby.BLL.PostPreviewListService
 {

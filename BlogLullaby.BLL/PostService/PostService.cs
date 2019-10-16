@@ -14,6 +14,8 @@ namespace BlogLullaby.BLL.PostService
         }
         public async Task<OperationDetails> CreatePostAsync(PostDTO postDTO)
         {
+            if (!postDTO.IsValid())
+                return postDTO.GetValidateError();
             var profile = await _dataStore.UserProfiles.GetByNameAsync(postDTO.Author.Username);
             if (profile == null)
                 return new OperationDetails(false, new string[] { "User profile not find." });

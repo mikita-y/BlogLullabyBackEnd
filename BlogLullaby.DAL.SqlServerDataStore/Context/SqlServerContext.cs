@@ -14,9 +14,15 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Context
         public DbSet<PostBodyBlock> PostBodyBlocks { get; set; }
         public DbSet<NotReadMessage> NotReadMessages { get; set; }
 
+        public SqlServerContext()
+        {
+            Database.EnsureCreated();
+        }
+
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

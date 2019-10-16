@@ -6,14 +6,16 @@ namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Context
 {
     public class IdentitySqlServerContext : IdentityDbContext<IdentityUser>
     {
-        
-        public IdentitySqlServerContext(DbContextOptions<IdentitySqlServerContext> options)
-            : base(options)
-        {
-        }
 
         public IdentitySqlServerContext()
         {
+            Database.EnsureCreated();
+        }
+
+        public IdentitySqlServerContext(DbContextOptions<IdentitySqlServerContext> options)
+            : base(options)
+        {
+            Database.EnsureCreated();
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

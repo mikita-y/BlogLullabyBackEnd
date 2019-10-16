@@ -1,6 +1,7 @@
 ﻿using BlogLullaby.BLL.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlogLullaby.BLL.PostService.DTO
 {
@@ -12,6 +13,7 @@ namespace BlogLullaby.BLL.PostService.DTO
         public string MainImageUrl { get; set; }
         public DateTime Date { get; set; }
         public int Visits { get; set; }
+        [Required]
         public UserViewDTO Author { get; set; }
     }
 
