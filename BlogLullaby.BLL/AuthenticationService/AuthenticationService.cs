@@ -41,9 +41,9 @@ namespace BlogLullaby.BLL.AuthenticationService
             else
             {
                 ///включение подтверждения пароля
-                //if(applicationUser.EmailConfirmed)
+                if(applicationUser.EmailConfirmed)
                     return new OperationDetails(true);
-                //else
+                else
                     return new OperationDetails(false, new string[] { "Email not confirmed." });
             }
         }

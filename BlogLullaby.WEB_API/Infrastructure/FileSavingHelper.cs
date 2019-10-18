@@ -32,8 +32,26 @@ namespace BlogLullaby.WEB_API.Infrastructure
             {
                 await savingFile.CopyToAsync(fileStream);
             }
+            
             var fileUrl = _appConfig.Host + '/' + folderPath + guidFileName;
             return fileUrl;
+        }
+
+        public async Task<bool> DeleteFileAsync(string url)
+        {
+            if (url == null)
+                return false;
+
+            FileInfo fileInf = new FileInfo(url);
+            if (fileInf.Exists)
+            {
+                fileInf.Delete();
+                // альтернатива с помощью класса File
+                // File.Delete(path);
+                return true;
+            }
+
+            return false;
         }
     }
 }

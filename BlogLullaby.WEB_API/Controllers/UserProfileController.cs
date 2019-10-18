@@ -56,12 +56,19 @@ namespace BlogLullaby.WEB_API.Controllers
             if (profile == null)
                 return BadRequest(new string[] { "Error with claim!!!" });
             var photoUrl = await _fileSavingHelper.SaveFormFile(body, "userPhotos");
+
             if (photoUrl == null)
                 return BadRequest(new string[] { "Cant save file, try again." });
             switch(property)
             {
-                case "avatar": profile.AvatarUrl = photoUrl; break;
-                case "photo": profile.PhotoUrl = photoUrl; break;
+                case "avatar":
+                    await _fileSavingHelper.DeleteFileAsync(profile.AvatarUrl);
+                    profile.AvatarUrl = photoUrl;
+                    break;
+                case "photo":
+                    await _fileSavingHelper.DeleteFileAsync(profile.PhotoUrl);
+                    profile.PhotoUrl = photoUrl;
+                    break;
             }
             var details = await _userProfileService.UpdateProfileAsync(profile);
             if (!details.IsSuccess)

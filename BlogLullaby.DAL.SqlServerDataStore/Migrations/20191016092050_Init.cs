@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
+namespace BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,21 +21,33 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NotReadMessages",
+                columns: table => new
+                {
+                    MessageId = table.Column<string>(nullable: false),
+                    RecipientId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotReadMessages", x => new { x.MessageId, x.RecipientId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserProfiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(maxLength: 30, nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(maxLength: 30, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: true),
+                    LastName = table.Column<string>(maxLength: 30, nullable: true),
                     PhotoUrl = table.Column<string>(nullable: true),
                     AvatarUrl = table.Column<string>(nullable: true),
-                    Specialization = table.Column<string>(maxLength: 50, nullable: true),
+                    Specialization = table.Column<string>(maxLength: 60, nullable: true),
                     Description = table.Column<string>(nullable: true),
                     City = table.Column<string>(maxLength: 30, nullable: true),
-                    LastVisit = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 9, 19, 2, 37, 47, 377, DateTimeKind.Local).AddTicks(6763)),
-                    IdentityUserId = table.Column<string>(maxLength: 450, nullable: true)
+                    LastVisit = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 10, 16, 12, 20, 42, 892, DateTimeKind.Local).AddTicks(9242)),
+                    IdentityUserId = table.Column<string>(maxLength: 450, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,8 +84,8 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Body = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 9, 19, 2, 37, 47, 622, DateTimeKind.Local).AddTicks(5699)),
-                    UserProfileId = table.Column<int>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 10, 16, 12, 20, 43, 58, DateTimeKind.Local).AddTicks(6890)),
+                    SenderId = table.Column<int>(nullable: true),
                     DialogId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -86,8 +98,8 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Messages_UserProfiles_UserProfileId",
-                        column: x => x.UserProfileId,
+                        name: "FK_Messages_UserProfiles_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -102,7 +114,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                     Title = table.Column<string>(maxLength: 500, nullable: true),
                     MainImageUrl = table.Column<string>(nullable: true),
                     Visits = table.Column<int>(nullable: false, defaultValue: 0),
-                    Date = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 9, 19, 2, 37, 47, 605, DateTimeKind.Local).AddTicks(1359)),
+                    Date = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 10, 16, 12, 20, 43, 46, DateTimeKind.Local).AddTicks(4872)),
                     UserProfileId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -148,9 +160,9 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                 column: "DialogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserProfileId",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "UserProfileId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostBodyBlocks_PostId",
@@ -166,8 +178,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                 name: "IX_UserProfiles_Username",
                 table: "UserProfiles",
                 column: "Username",
-                unique: true,
-                filter: "[Username] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -177,6 +188,9 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "NotReadMessages");
 
             migrationBuilder.DropTable(
                 name: "PostBodyBlocks");

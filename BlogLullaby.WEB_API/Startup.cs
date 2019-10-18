@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using System;
+using BlogLullaby.WEB_API.Filters;
 
 namespace BlogLullaby.WEB_API
 {
@@ -38,7 +39,10 @@ namespace BlogLullaby.WEB_API
             services.AddCors();
             services.AddJWTAuthentication(Configuration);
             services.AddSignalR();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +62,7 @@ namespace BlogLullaby.WEB_API
                 builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host2"])
+                    .WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host2"], Configuration["CorsOrigins:Host1_1"])
                     .AllowCredentials());
             
             app.UseAuthentication();

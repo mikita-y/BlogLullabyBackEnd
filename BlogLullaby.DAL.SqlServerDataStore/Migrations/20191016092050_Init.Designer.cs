@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
+namespace BlogLullaby.DAL.SqlServerDataStore.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20190918234854_UpdateUserProfile")]
-    partial class UpdateUserProfile
+    [Migration("20191016092050_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,19 +58,32 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 53, 119, DateTimeKind.Local).AddTicks(3649));
+                        .HasDefaultValue(new DateTime(2019, 10, 16, 12, 20, 43, 58, DateTimeKind.Local).AddTicks(6890));
 
                     b.Property<string>("DialogId");
 
-                    b.Property<int?>("UserProfileId");
+                    b.Property<int?>("SenderId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DialogId");
 
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("BlogLullaby.DAL.DataStore.Entities.NotReadMessage", b =>
+                {
+                    b.Property<string>("FirstKey")
+                        .HasColumnName("MessageId");
+
+                    b.Property<int>("SecondKey")
+                        .HasColumnName("RecipientId");
+
+                    b.HasKey("FirstKey", "SecondKey");
+
+                    b.ToTable("NotReadMessages");
                 });
 
             modelBuilder.Entity("BlogLullaby.DAL.DataStore.Entities.Post", b =>
@@ -81,7 +94,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 53, 82, DateTimeKind.Local).AddTicks(8011));
+                        .HasDefaultValue(new DateTime(2019, 10, 16, 12, 20, 43, 46, DateTimeKind.Local).AddTicks(4872));
 
                     b.Property<string>("MainImageUrl");
 
@@ -139,6 +152,7 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("IdentityUserId")
+                        .IsRequired()
                         .HasMaxLength(450);
 
                     b.Property<string>("LastName")
@@ -146,12 +160,12 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
 
                     b.Property<DateTime>("LastVisit")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 9, 19, 2, 48, 52, 921, DateTimeKind.Local).AddTicks(349));
+                        .HasDefaultValue(new DateTime(2019, 10, 16, 12, 20, 42, 892, DateTimeKind.Local).AddTicks(9242));
 
                     b.Property<string>("PhotoUrl");
 
                     b.Property<string>("Specialization")
-                        .HasMaxLength(50);
+                        .HasMaxLength(60);
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -184,9 +198,9 @@ namespace BlogLullaby.BlogLullaby.DAL.SqlServerDataStore.Migrations
                         .WithMany("Messages")
                         .HasForeignKey("DialogId");
 
-                    b.HasOne("BlogLullaby.DAL.DataStore.Entities.UserProfile", "UserProfile")
+                    b.HasOne("BlogLullaby.DAL.DataStore.Entities.UserProfile", "Sender")
                         .WithMany("Messages")
-                        .HasForeignKey("UserProfileId");
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("BlogLullaby.DAL.DataStore.Entities.Post", b =>
