@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BlogLullaby.BLL.UserProfileService;
 using BlogLullaby.BLL.UserProfileService.DTO;
 using BlogLullaby.WEB_API.Infrastructure;
@@ -55,18 +54,17 @@ namespace BlogLullaby.WEB_API.Controllers
             var profile = await _userProfileService.GetProfileByNameAsync(claimName);
             if (profile == null)
                 return BadRequest(new string[] { "Error with claim!!!" });
-            var photoUrl = await _fileSavingHelper.SaveFormFile(body, "userPhotos");
-
+            var photoUrl = await _fileSavingHelper.SaveFormFileAsync(body, "userPhotos");
             if (photoUrl == null)
                 return BadRequest(new string[] { "Cant save file, try again." });
             switch(property)
             {
                 case "avatar":
-                    await _fileSavingHelper.DeleteFileAsync(profile.AvatarUrl);
+                    _fileSavingHelper.DeleteFile(profile.AvatarUrl);
                     profile.AvatarUrl = photoUrl;
                     break;
                 case "photo":
-                    await _fileSavingHelper.DeleteFileAsync(profile.PhotoUrl);
+                    _fileSavingHelper.DeleteFile(profile.PhotoUrl);
                     profile.PhotoUrl = photoUrl;
                     break;
             }

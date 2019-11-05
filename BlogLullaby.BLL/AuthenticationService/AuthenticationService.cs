@@ -23,12 +23,14 @@ namespace BlogLullaby.BLL.AuthenticationService
             {
                 return userDTO.GetValidateError();
             }
+            string username = null;
             var applicationUser = await userManager.GetUserByEmailAsync(userDTO.Login);
             if (applicationUser == null)
             {
                 var userProfile = await dataStore.UserProfiles.GetByNameAsync(userDTO.Login);
                 if(userProfile == null)
                     return new OperationDetails(false, new string[] { "Username not found."});
+                username = userProfile.Username;
                 applicationUser = await userManager.GetUserByIdAsync(userProfile.IdentityUserId);
                 if(applicationUser == null)
                     return new OperationDetails(false, new string[] { "Error in system logic." });
@@ -40,11 +42,16 @@ namespace BlogLullaby.BLL.AuthenticationService
             }
             else
             {
+
+                if (username == null)
+                    username = dataStore.UserProfiles.GetAll()
+                        .FirstOrDefault(x => x.IdentityUserId == applicationUser.Id)
+                        .Username;
                 ///включение подтверждения пароля
-                if(applicationUser.EmailConfirmed)
-                    return new OperationDetails(true);
-                else
-                    return new OperationDetails(false, new string[] { "Email not confirmed." });
+                //if(applicationUser.EmailConfirmed)
+                return new OperationDetails(true, new string[] { username });
+                //else
+                  //  return new OperationDetails(false, new string[] { "Email not confirmed." });
             }
         }
 

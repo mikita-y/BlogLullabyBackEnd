@@ -1,7 +1,5 @@
 ﻿using BlogLullaby.BLL.UserProfileService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlogLullaby.WEB_API.Infrastructure
@@ -15,11 +13,14 @@ namespace BlogLullaby.WEB_API.Infrastructure
             _userProfileService = service;
         }
 
-        public async Task Refresh(string username)
+        public async Task RefreshAsync(string username)
         {
             var user = await _userProfileService.GetProfileByNameAsync(username);
-            user.LastVisit = DateTime.Now;
-            var a = await _userProfileService.UpdateProfileAsync(user);
+            if(user != null)
+            {
+                user.LastVisit = DateTime.Now;
+                var a = await _userProfileService.UpdateProfileAsync(user);
+            }
         }
     }
 }

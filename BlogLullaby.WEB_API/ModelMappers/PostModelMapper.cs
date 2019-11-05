@@ -20,14 +20,14 @@ namespace BlogLullaby.WEB_API.ModelMappers
                 {
                     BlockType = x.Type,
                     Position = i,
-                    Content = x.Image != null ? _fileSavingHelper.SaveFormFile(x.Image, "postsPhotos").Result : x.Text
+                    Content = x.Image != null ? _fileSavingHelper.SaveFormFileAsync(x.Image, "postsPhotos").Result : x.Text
                 }),
                 Author = new UserViewDTO()
                 {
                     Username = username
                 },
                 Date = DateTime.Now,
-                MainImageUrl = _fileSavingHelper.SaveFormFile(model.MainImage, "postsPhotos").Result,
+                MainImageUrl = _fileSavingHelper.SaveFormFileAsync(model.MainImage, "postsPhotos").Result,
                 Title = model.Title,
                 Visits = 0
             };

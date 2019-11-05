@@ -23,7 +23,8 @@ namespace BlogLullaby.WEB_API.Controllers
         private IEmailService _emailService;
         private JWTConfig jwtConfig;
 
-        public AuthenticationController(IAuthenticationService authService, IOptions<JWTConfig> jwtConfig, IEmailService emailService)
+        public AuthenticationController(IAuthenticationService authService, 
+            IOptions<JWTConfig> jwtConfig, IEmailService emailService)
         {
             _userService = authService;
             _emailService = emailService;
@@ -48,7 +49,7 @@ namespace BlogLullaby.WEB_API.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = user.Login
+                username = ((string[])result.Descriptions)[0]
             };
             return Ok(response);
         }
@@ -109,7 +110,7 @@ namespace BlogLullaby.WEB_API.Controllers
             }
             var result = await _userService.ConfirmEmailAsync(email, code);
             if (result.IsSuccess)
-                return Redirect("http://localhost:3000");
+                return Redirect(jwtConfig.Audience);
             else
                 return BadRequest();
         }

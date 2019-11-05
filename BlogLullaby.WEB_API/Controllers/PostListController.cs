@@ -8,7 +8,6 @@ namespace BlogLullaby.WEB_API.Controllers
     [ApiController]
     public class PostListController : Controller
     {
-
         private IPostPreviewListService _postListService;
 
         public PostListController(IPostPreviewListService service)
