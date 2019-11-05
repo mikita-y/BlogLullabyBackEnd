@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BlogLullaby.WEB_API.Infrastructure
@@ -17,7 +18,7 @@ namespace BlogLullaby.WEB_API.Infrastructure
             _appConfig = appConfig.Value;
         }
 
-        public async Task<string> SaveFormFile(IFormFile savingFile, string relativePath = null)
+        public async Task<string> SaveFormFileAsync(IFormFile savingFile, string relativePath = null)
         {
             if (savingFile == null)
                 return null;
@@ -32,8 +33,29 @@ namespace BlogLullaby.WEB_API.Infrastructure
             {
                 await savingFile.CopyToAsync(fileStream);
             }
+            
             var fileUrl = _appConfig.Host + '/' + folderPath + guidFileName;
             return fileUrl;
+        }
+
+        public Task<bool> DeleteFile(string url)
+        {
+            return Task.Run(() =>
+            {
+                if (url == null)
+                    return false;
+                var path = new StringBuilder(url)
+                    .Replace(_appConfig.Host, _appEnvironment.WebRootPath)
+                    .ToString();
+
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
+                {
+                    fileInf.Delete();
+                    return true;
+                }
+                return false;
+            });
         }
     }
 }

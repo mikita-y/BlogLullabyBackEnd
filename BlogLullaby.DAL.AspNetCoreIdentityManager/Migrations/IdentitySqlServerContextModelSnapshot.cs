@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
 
-namespace BlogLullaby.DAL.Migrations
+namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Migrations
 {
     [DbContext(typeof(IdentitySqlServerContext))]
     partial class IdentitySqlServerContextModelSnapshot : ModelSnapshot

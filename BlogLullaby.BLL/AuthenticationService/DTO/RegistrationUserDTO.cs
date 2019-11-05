@@ -5,12 +5,13 @@ namespace BlogLullaby.BLL.AuthenticationService.DTO
 {
     public class RegistrationUserDTO : DTOobject
     {
-        [Required]
+        [Required(ErrorMessage = "Имя не установлено")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "asd")]
         public string UserName { get; set; }
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email не установлено")]
+        [EmailAddress(ErrorMessage = "Email not valid")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password is requered")]
         public string Password { get; set; }
         [Required]
         public string FirstName { get; set; }

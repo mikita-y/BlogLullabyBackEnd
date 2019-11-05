@@ -8,10 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using BlogLullaby.DAL.AspNetCoreIdentityManager.Context;
 using BlogLullaby.WEB_API.Hubs;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
-using System;
+using BlogLullaby.WEB_API.Filters;
 
 namespace BlogLullaby.WEB_API
 {
@@ -32,13 +29,23 @@ namespace BlogLullaby.WEB_API
             services.AddWebApiServices();
             services.AddDbContexts(Configuration);
             services.AddDataStores();
-            services.AddIdentityCore<IdentityUser>()
+            services.AddIdentityCore<IdentityUser>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            })
                 .AddEntityFrameworkStores<IdentitySqlServerContext>()
                 .AddDefaultTokenProviders();
             services.AddCors();
             services.AddJWTAuthentication(Configuration);
             services.AddSignalR();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,9 +65,9 @@ namespace BlogLullaby.WEB_API
                 builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host2"])
+                    .WithOrigins(Configuration["CorsOrigins:Host1"], Configuration["CorsOrigins:Host1_1"],
+                        Configuration["CorsOrigins:Host2"], Configuration["CorsOrigins:Host2_2"])
                     .AllowCredentials());
-            
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();

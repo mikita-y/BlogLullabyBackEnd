@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BlogLullaby.BLL.UserCommunicatingService;
 using BlogLullaby.BLL.UserCommunicatingService.DTO;
@@ -24,7 +23,7 @@ namespace BlogLullaby.WEB_API.Controllers
         }
         // GET: api/Communicating
         [HttpGet]
-        public async Task<ActionResult<(IEnumerable<DialogPreview> dialogList, int pageCount)>> Get()
+        public async Task<ActionResult> Get()
         {
             var criterion = new DialogCriterion()
             {
@@ -55,7 +54,7 @@ namespace BlogLullaby.WEB_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<(IEnumerable<DialogPreview> dialogList, int pageCount)>> Post(DialogCriterion criterion)
+        public async Task<ActionResult> Post(DialogCriterion criterion)
         {
             var username = await HttpContext.GetUserNameAsync();
             if (username == null)
@@ -72,10 +71,7 @@ namespace BlogLullaby.WEB_API.Controllers
             if(dialog == null)
                 return NotFound(new string[] { "Dialog not found." });
             return Ok(dialog);
-
         }
-
-
 
         [HttpPut]
         public async Task<IActionResult> Put(DialogUpdatingModel dialog)

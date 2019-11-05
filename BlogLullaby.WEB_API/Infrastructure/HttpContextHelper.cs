@@ -1,8 +1,4 @@
-﻿using BlogLullaby.BLL.UserProfileService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +10,7 @@ namespace BlogLullaby.WEB_API.Infrastructure
         {
             var name = context.User.Claims.Where(x => x.Type == "username").SingleOrDefault().Value;
             var onlineRefresher = context.RequestServices.GetService(typeof (OnlineRefresher));
-            await ((OnlineRefresher)onlineRefresher).Refresh(name);
+            await ((OnlineRefresher)onlineRefresher).RefreshAsync(name);
             return name;
         }
     }

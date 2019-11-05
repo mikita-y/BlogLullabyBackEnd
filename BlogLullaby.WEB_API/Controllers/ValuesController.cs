@@ -4,26 +4,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlogLullaby.BLL.UserCommunicatingService;
 using BlogLullaby.WEB_API.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace BlogLullaby.WEB_API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private IUserCommunicatingService _communicatingService;
-
-        public ValuesController(IUserCommunicatingService service)
+        private IHostingEnvironment _appEnvironment;
+        private AppConfig _appConfig;
+        public ValuesController(IHostingEnvironment appEnvironment, IOptions<AppConfig> appConfig)
         {
-            _communicatingService = service;
+            _appEnvironment = appEnvironment;
+            _appConfig = appConfig.Value;
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return $"{_appEnvironment.WebRootPath}";
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<int> Get(int id)
+        {
+            return (id / 0);
         }
 
         // POST api/values

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BlogLullaby.BLL.PostPreviewListService;
-using BlogLullaby.BLL.PostPreviewListService.DTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogLullaby.WEB_API.Controllers
@@ -13,7 +8,6 @@ namespace BlogLullaby.WEB_API.Controllers
     [ApiController]
     public class PostListController : Controller
     {
-
         private IPostPreviewListService _postListService;
 
         public PostListController(IPostPreviewListService service)

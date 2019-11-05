@@ -2,7 +2,6 @@
 using BlogLullaby.BLL.Infrastructure;
 using System.Threading.Tasks;
 using BlogLullaby.DAL.DataStore.Interfaces;
-using System;
 
 namespace BlogLullaby.BLL.UserProfileService
 {

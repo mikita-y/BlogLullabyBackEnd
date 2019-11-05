@@ -40,9 +40,6 @@ namespace BlogLullaby.WEB_API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromForm]CreatingPostModelCrutch newPost)
         {
-
-            ///////////////////////////
-
             var claim = await HttpContext.GetUserNameAsync();
             var creatingPostModel = newPost.MapToCreatingPostModel();
             var postDto = creatingPostModel.MapToDTO(claim, _fileSavingHelper);
@@ -72,7 +69,6 @@ namespace BlogLullaby.WEB_API.Controllers
             if (!description.IsSuccess)
                 return BadRequest(description.Descriptions);
             return Ok();
-
         }
     }
 }

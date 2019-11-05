@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlogLullaby.DAL.Migrations
+namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Migrations
 {
     public partial class Initial : Migration
     {
