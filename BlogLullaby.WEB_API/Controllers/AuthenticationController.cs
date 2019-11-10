@@ -68,8 +68,10 @@ namespace BlogLullaby.WEB_API.Controllers
                     "authentication",
                     new { email = user.Email, code },
                     protocol: HttpContext.Request.Scheme);
-                await _emailService.SendEmailAsync(user.Email, "Confirm your account",
+                var isEmailSend = await _emailService.SendEmailAsync(user.Email, "Confirm your account",
                     $"<p>Hello, {user.FirstName}!</p> <p>Confirm registration by clicking on the link: <a href='{callbackUrl}'>BloglullabyApi</a> </p><p>Sincerely, BlogLullaby website administration.</p>", $"{user.FirstName} {user.LastName}");
+                if(!isEmailSend)
+                    return BadRequest(new string[] { "Confirm token not send to email, but u can sign in." });
                 var response = new
                 {
                     username = user.Email,

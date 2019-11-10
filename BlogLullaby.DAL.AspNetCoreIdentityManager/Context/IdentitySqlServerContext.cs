@@ -15,7 +15,6 @@ namespace BlogLullaby.DAL.AspNetCoreIdentityManager.Context
         public IdentitySqlServerContext(DbContextOptions<IdentitySqlServerContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
     }
 }
