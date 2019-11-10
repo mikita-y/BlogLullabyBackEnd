@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogLullaby.BLL.EmailService;
 using BlogLullaby.BLL.UserCommunicatingService;
 using BlogLullaby.WEB_API.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -17,8 +18,10 @@ namespace BlogLullaby.WEB_API.Controllers
     {
         private IHostingEnvironment _appEnvironment;
         private AppConfig _appConfig;
-        public ValuesController(IHostingEnvironment appEnvironment, IOptions<AppConfig> appConfig)
+        private IEmailService _email;
+        public ValuesController(IHostingEnvironment appEnvironment, IOptions<AppConfig> appConfig, IEmailService emailService)
         {
+            _email = emailService;
             _appEnvironment = appEnvironment;
             _appConfig = appConfig.Value;
         }
@@ -31,9 +34,12 @@ namespace BlogLullaby.WEB_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<int> Get(int id)
+        public async Task<ActionResult<int>> Get(int id)
         {
-            return (id / 0);
+            var result =  await _email.SendEmailAsync("nuktinov@gmail.com", "Check",$"{id}", "");
+            if(result)
+                return id ;
+            return 0;
         }
 
         // POST api/values

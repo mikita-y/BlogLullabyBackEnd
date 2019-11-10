@@ -22,7 +22,6 @@ namespace BlogLullaby.DAL.SqlServerDataStore.Context
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

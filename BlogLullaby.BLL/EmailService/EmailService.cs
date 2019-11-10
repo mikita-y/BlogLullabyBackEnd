@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using BlogLullaby.BLL.Infrastructure;
-using MailKit.Net.Smtp;
+//using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
-using MimeKit;
+//using MimeKit;
 
 namespace BlogLullaby.BLL.EmailService
 {
@@ -19,8 +21,33 @@ namespace BlogLullaby.BLL.EmailService
             throw new NotImplementedException();
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message, string personName = "")
+        public async Task<bool> SendEmailAsync(string email, string subject, string message, string personName = "")
         {
+            // отправитель - устанавливаем адрес и отображаемое в письме имя
+            MailAddress from = new MailAddress(_emailConfig.OrganizationEmailAdres, _emailConfig.OrganizationName);
+            // кому отправляем
+            MailAddress to = new MailAddress(email);
+            // создаем объект сообщения
+            MailMessage m = new MailMessage(from, to);
+            // тема письма
+            m.Subject = subject;
+            // текст письма
+            m.Body = message;
+            // письмо представляет код html
+            m.IsBodyHtml = true;
+            // адрес smtp-сервера и порт, с которого будем отправлять письмо
+            var a = true;
+            SmtpClient smtp = new SmtpClient(_emailConfig.SmtpServer, _emailConfig.Port);
+            // логин и пароль
+            smtp.Credentials = new NetworkCredential(_emailConfig.OrganizationEmailAdres, _emailConfig.Password);
+
+            smtp.EnableSsl = _emailConfig.UseSSL;
+            
+                await smtp.SendMailAsync(m);
+                return true;
+            
+
+            /*
             var emailMessage = new MimeMessage();
 
             emailMessage.From.Add(new MailboxAddress(_emailConfig.OrganizationName, _emailConfig.OrganizationEmailAdres));
@@ -33,19 +60,19 @@ namespace BlogLullaby.BLL.EmailService
 
             using (var client = new SmtpClient())
             {
-                ///client.ConnectAsync();
                 try
                 {
                     await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, _emailConfig.UseSSL);
                     await client.AuthenticateAsync(_emailConfig.OrganizationEmailAdres, _emailConfig.Password);
                     await client.SendAsync(emailMessage);
                     await client.DisconnectAsync(true);
+                    return true;
                 }
                 catch(Exception e)
                 {
-                    var a = e.Message;
+                    return false;
                 }
-            }
+            }*/
         }
     }
 }
